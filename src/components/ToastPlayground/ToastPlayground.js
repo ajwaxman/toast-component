@@ -7,6 +7,9 @@ import styles from './ToastPlayground.module.css';
 const VARIANT_OPTIONS = ['notice', 'warning', 'success', 'error'];
 
 function ToastPlayground() {
+  const [message, setMessage] = React.useState('');
+  const [variant, setVariant] = React.useState('');
+
   return (
     <div className={styles.wrapper}>
       <header>
@@ -21,10 +24,16 @@ function ToastPlayground() {
             className={styles.label}
             style={{ alignSelf: 'baseline' }}
           >
-            Message
+            Message {message}
           </label>
           <div className={styles.inputWrapper}>
-            <textarea id="message" className={styles.messageInput} />
+            <textarea
+              id="message" 
+              className={styles.messageInput}
+              onChange={event => {
+                setMessage(event.target.value);
+              }}  
+            />
           </div>
         </div>
 
@@ -33,15 +42,35 @@ function ToastPlayground() {
           <div
             className={`${styles.inputWrapper} ${styles.radioWrapper}`}
           >
-            <label htmlFor="variant-notice">
+            {VARIANT_OPTIONS.map(option => (
+              <label htmlFor={`variant-${option}`} key={option}>
+                <input 
+                  type="radio"
+                  name={`variant-${option}`}
+                  id={option}
+                  value={option}
+                  checked={option === variant}
+                  onChange={event => {
+                    setVariant(event.target.value);
+                  }}
+                />
+                {option}
+              </label>
+            ))}
+            {/* <label htmlFor="variant-notice">
               <input
                 id="variant-notice"
                 type="radio"
                 name="variant"
                 value="notice"
+                onChange={ event => {
+                  setVariant(event.target.value);
+                }
+
+                }
               />
               notice
-            </label>
+            </label> */}
 
             {/* TODO Other Variant radio buttons here */}
           </div>

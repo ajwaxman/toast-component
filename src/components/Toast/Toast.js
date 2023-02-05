@@ -20,6 +20,11 @@ const ICONS_BY_VARIANT = {
 
 function Toast({id, variant, toasts, setToasts, children}) {
   const Icon = ICONS_BY_VARIANT[variant];
+  const handleDismiss = (id) => {
+    setToasts(toasts.filter(t => {
+      return t.id !== id;
+    }))
+  } 
 
   return (
     <div className={`${styles.toast} ${styles[variant]}`}>
@@ -30,10 +35,7 @@ function Toast({id, variant, toasts, setToasts, children}) {
         {children}
       </p>
       <button 
-        onClick={() => setToasts(
-          toasts.filter(t => {
-            return t.id !== id
-        }))} 
+        onClick={() => handleDismiss(id)} 
         className={styles.closeButton}>
         <X size={24} />
         <VisuallyHidden>Dismiss message</VisuallyHidden>

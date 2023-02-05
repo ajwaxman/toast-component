@@ -12,6 +12,18 @@ function ToastPlayground() {
   const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
   const [toasts, setToasts] = React.useState([]);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setToasts(
+      [
+        ...toasts,
+        { id: crypto.randomUUID(), variant: variant, message: message}
+      ]
+    )
+    setMessage('');
+    setVariant(VARIANT_OPTIONS[0]);
+  }
+
   return (
     <div className={styles.wrapper}>
       <header>
@@ -22,17 +34,7 @@ function ToastPlayground() {
       <ToastShelf toasts={toasts} setToasts={setToasts}/>
 
       <div className={styles.controlsWrapper}>
-        <form onSubmit={event => {
-          event.preventDefault();
-          setToasts(
-            [
-              ...toasts,
-              { id: crypto.randomUUID(), variant: variant, message: message}
-            ]
-          )
-          setMessage('');
-          setVariant(VARIANT_OPTIONS[0]);
-        }}>
+        <form onSubmit={handleSubmit}>
           <div className={styles.row}>
             <label
               htmlFor="message"

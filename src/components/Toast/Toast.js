@@ -7,6 +7,8 @@ import {
   X,
 } from 'react-feather';
 
+import { ToastContext } from '../ToastProvider/ToastProvider';
+
 import VisuallyHidden from '../VisuallyHidden';
 
 import styles from './Toast.module.css';
@@ -18,8 +20,9 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast({id, variant, toasts, setToasts, children}) {
+function Toast({id, variant, children}) {
   const Icon = ICONS_BY_VARIANT[variant];
+  const { toasts, setToasts } = React.useContext(ToastContext);
   const handleDismiss = (id) => {
     setToasts(toasts.filter(t => {
       return t.id !== id;

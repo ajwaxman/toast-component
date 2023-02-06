@@ -2,27 +2,14 @@ import React, { useEffect } from 'react';
 
 import Toast from '../Toast';
 import styles from './ToastShelf.module.css';
+import useEscapeKey from '../../hooks/useEscapeKey';
 
 import { ToastContext } from '../ToastProvider/ToastProvider';
 
 function ToastShelf() {
-  const { toasts, setToasts } = React.useContext(ToastContext);
+  const { toasts, dismissAllToasts } = React.useContext(ToastContext);
 
-  useEffect(() => {
-    const keyPressed = (e) => {
-      // If the escape key is pressed...
-      if (e.keyCode === 27) {
-        setToasts([]);
-      }
-    };
-
-    document.addEventListener("keydown", keyPressed);
-
-    return () => {
-      document.removeEventListener("keydown", keyPressed);
-    }
-
-  }, []);
+  useEscapeKey(dismissAllToasts);
 
   return (
     <ol 
